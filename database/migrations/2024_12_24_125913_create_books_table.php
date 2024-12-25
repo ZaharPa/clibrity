@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('category', Book::$category);
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->string('book_path')->nullable();
+            $table->string('title_path')->nullable();
 
             $table->timestamps();
         });
