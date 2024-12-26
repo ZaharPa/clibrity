@@ -7,9 +7,10 @@
     <title>Clibrity</title>
 
     @vite('resources/js/app.js')
+    @routes
     @inertiaHead
   </head>
-  <body class="bg-slate-400">
+  <body class="bg-amber-800">
     @inertia
   </body>
 </html>
