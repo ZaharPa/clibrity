@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .input-filter-l {
+        @apply placeholder:text-amber-200 text-orange-900 border border-amber-500 bg-orange-300 rounded-t-md rounded-l-md rounded-b-md rounded-r-none text-sm font-medium
+    }
+    .input-filter-r {
+        @apply placeholder:text-amber-200 text-orange-900 border border-amber-500 bg-orange-300 rounded-t-md rounded-l-none rounded-b-none rounded-r-md text-sm font-medium
+    }
+}

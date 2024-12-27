@@ -10,10 +10,33 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::paginate(20);
-        return inertia('Book/Index', ['books' => $books]);
+        $sort = $request->get('sort', 'created_at');
+        $order = $request->get('order', 'desc');
+
+        $allowedSorts = ['title', 'author', 'category', 'size', 'created_at'];
+        if(!in_array($sort, $allowedSorts)) {
+            $sort = 'created_at';
+        }
+
+        $filters = $request->only([
+            'title', 'author', 'category', 'size'
+        ]);
+
+        return inertia(
+            'Book/Index',
+            [
+                'sort' => $sort,
+                'order' => $order,
+                'filters' => $filters,
+                'books' => Book::orderBy($sort, $order)
+                    ->filter($filters)
+                    ->paginate(20)
+                    ->withQueryString(),
+
+            ]
+        );
     }
 
     /**
@@ -35,9 +58,9 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Book $book)
     {
-        //
+        return inertia('Book/Show', ['book' => $book]);
     }
 
     /**
