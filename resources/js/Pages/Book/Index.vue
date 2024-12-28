@@ -50,7 +50,8 @@ function sort(column) {
 
     router.get(route('books.index'), {
         sort: column,
-        order: newOrder
+        order: newOrder,
+        ...props.filters
     }, {
         preserveState: true,
         replace: true

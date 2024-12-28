@@ -9,4 +9,8 @@
     .input-filter-r {
         @apply placeholder:text-amber-200 text-orange-900 border border-amber-500 bg-orange-300 rounded-t-md rounded-l-none rounded-b-none rounded-r-md text-sm font-medium
     }
+
+    .btn-normal {
+        @apply border border-amber-950 bg-slate-700 text-gray-100 p-1 font-medium rounded-md hover:bg-amber-700 hover:border-dashed
+    }
 }

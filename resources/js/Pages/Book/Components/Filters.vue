@@ -1,10 +1,11 @@
 <template>
-    <form @sumbit.prevent="filter">
+    <form @submit.prevent="filter">
         <div class="mb-8 flex flex-wrap gap-4">
             <div class="flex flex-nowrap items-center">
                 <input v-model="filterForm.title" type="text" placeholder="Title" class="input-filter-l" />
                 <input v-model="filterForm.author" type="text" placeholder="Author" class="input-filter-r" />
             </div>
+
             <div class="flex flex-nowrap items-center">
                 <select v-model="filterForm.category" class="input-filter-l">
                     <option :value="null">Category</option>
@@ -26,8 +27,13 @@
                     <option value="301">301-400</option>
                     <option value="401">401-500</option>
                     <option value="501">501-600</option>
-                    <option value="600">600+</option>
+                    <option value="601">600+</option>
                 </select>
+            </div>
+
+            <div class="items-center space-x-3">
+                <button type="sumbit" class="btn-normal">Filter</button>
+                <button type="reset" @click="clear" class="btn-normal">Clear</button>
             </div>
         </div>
     </form>
@@ -57,4 +63,11 @@ const filter = () => {
     )
 }
 
+const clear = () => {
+    filterForm.title = null
+    filterForm.author = null
+    filterForm.category = null
+    filterForm.size = null
+    filter()
+}
 </script>

@@ -49,7 +49,11 @@ class Book extends Model
             fn($query, $category) => $query->where('category', $category)
         )->when(
             $filters['size'] ?? false,
-            fn($query, $value) => $query->whereBetween('size', [$value, $value + 99])
+            fn($query, $value) => $query->when(
+                $value > 600,
+                fn($q) => $q->where('size', '>', 600),
+                fn($q) => $q->whereBetween('size', [$value, $value + 99])
+            )
         );
     }
 }
