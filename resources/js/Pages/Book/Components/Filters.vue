@@ -55,7 +55,7 @@ const filterForm = useForm({
 
 const filter = () => {
     filterForm.get(
-        route('books.index'),
+        route('book.index'),
         {
             preserveState: true,
             preserveScroll: true,

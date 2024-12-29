@@ -1,5 +1,5 @@
 <template>
-    <Link :href="route('books.show', {book: book.id})">
+    <Link :href="route('book.show', {book: book.id})">
         <div class="grid grid-cols-9 gap-2 mb-5 px-2 py-4 shadow-md hover:shadow-lg border-b border-amber-800 text-center hover:font-medium hover:text-amber-950">
             <span class="col-span-2">Photo</span>
             <span class="col-span-3">{{ book.title }}</span>

@@ -48,7 +48,7 @@ function sort(column) {
         newOrder = props.order === 'asc' ? 'desc' : 'asc';
     }
 
-    router.get(route('books.index'), {
+    router.get(route('book.index'), {
         sort: column,
         order: newOrder,
         ...props.filters
