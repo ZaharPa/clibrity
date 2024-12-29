@@ -6,11 +6,13 @@
                     <Link :href="route('book.index')">Clibrity</Link>
                 </div>
 
-                <div v-if="user">
+                <div v-if="user" class="flex items-center gap-6">
+                    <Link>{{ user.name }}`s Bookshelf</Link>
+                    <Link>Added by Me</Link>
                     <Link :href="route('logout')" method="delete" as="button">Logout</Link>
                 </div>
                 <div v-else class="flex items-center gap-2">
-                    <Link href="#">Register</Link>
+                    <Link :href="route('register.create')">Register</Link>
                     <Link :href="route('login')">Sign-in</Link>
                 </div>
             </nav>
@@ -18,6 +20,9 @@
     </header>
 
     <main class="bg-amber-50 mx-auto w-3/4 min-h-screen  shadow-lg p-6">
+        <div v-if="flashSuccess" class="mb-4 border border-dashed rounded-md border-green-600 bg-green-50 text-emerald-800 font-medium shadow-sm p-2">
+            {{ flashSuccess }}
+        </div>
         <slot>Default</slot>
     </main>
 </template>
@@ -27,6 +32,8 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const page = usePage()
+
+const flashSuccess = computed(() => page.props.flash.success)
 
 const user = computed(
     () => page.props.user

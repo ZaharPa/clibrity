@@ -17,7 +17,7 @@
             <button type="submit" class="btn-normal w-full">Login</button>
 
             <div class="mt-2 text-center hover:text-orange-700">
-                <Link href="#">Need an account? Click Here</Link>
+                <Link :href="route('register.create')">Need an account? Click Here</Link>
             </div>
         </div>
     </div>
