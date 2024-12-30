@@ -33,8 +33,8 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::post('/email/verification-notification', function (Request $request) {
     if (!$request->user()->hasVerifiedEmail()) {
         $request->user()->sendEmailVerificationNotification();
-        return redirect()->intended()->with('success', 'Verification link sent!');
+        return redirect()->intended('/book')->with('success', 'Verification link sent!');
     }
 
-    return redirect()->intended()->with('success', 'You already have verified email');
+    return redirect()->intended('/book')->with('success', 'You already have verified email');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
