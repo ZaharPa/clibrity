@@ -27,6 +27,6 @@ class RegistrationController extends Controller
         event(new Registered($user));
 
         return redirect()->route('book.index')
-            ->with('success', 'Account created!');
+            ->with('success', 'Account created!. Verification email was sent');
     }
 }
