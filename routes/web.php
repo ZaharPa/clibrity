@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddedByUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RegistrationController;
@@ -38,3 +39,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return redirect()->intended('/book')->with('success', 'You already have verified email');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::resource('added-book', AddedByUserController::class)
+    ->middleware(['auth', 'verified']);

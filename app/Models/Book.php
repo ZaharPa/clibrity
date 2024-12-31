@@ -12,6 +12,10 @@ class Book extends Model
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
 
+    protected $fillable = ['title', 'author', 'description', 'size', 'category', 'title_path', 'book_path'];
+
+    protected $appends = ['title_url', 'book_url'];
+
     public static array $category = [
         'Fiction',
         'Non-Fiction',
@@ -34,6 +38,16 @@ class Book extends Model
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getTitleUrlAttribute()
+    {
+        return asset('storage/' . $this->title_path);
+    }
+
+    public function getBookUrlAttribute()
+    {
+        return asset('storage/' . $this->book_path);
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder
