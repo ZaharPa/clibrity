@@ -29,4 +29,8 @@
     .input-file {
         @apply cursor-pointer bg-amber-500 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition
     }
+
+    .yellow-light {
+        @apply hover:drop-shadow-[0_0_8px_rgba(255,255,100,0.8)] transition-all duration-200
+    }
 }

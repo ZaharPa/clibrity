@@ -49,6 +49,9 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    /**
+    * @method \Illuminate\Database\Eloquent\Relations\HasMany publishedBooks()
+    */
     public function publishedBooks(): HasMany
     {
         return $this->hasMany(Book::class);

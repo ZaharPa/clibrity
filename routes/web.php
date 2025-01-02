@@ -41,4 +41,4 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::resource('added-book', AddedByUserController::class)
-    ->middleware(['auth', 'verified']);
+    ->middleware(['auth', 'verified'])->except('show');

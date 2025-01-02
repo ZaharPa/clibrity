@@ -10,7 +10,9 @@ class AddedByUserController extends Controller
 {
     public function index()
     {
-        return inertia('AddedByUser/Index');
+        return inertia('AddedByUser/Index', [
+            'books' => Auth::user()->publishedBooks()->paginate(10)
+        ]);
     }
 
     public function create()
@@ -52,23 +54,17 @@ class AddedByUserController extends Controller
             return redirect()->route('book.show', $book)->with('success', 'Book added successfully');
     }
 
-    public function show(string $id)
+    public function edit(Book $added_book)
+    {
+        return inertia('AddedByUser/Edit', ['book' => $added_book]);
+    }
+
+    public function update(Request $request, Book $added_book)
     {
         //
     }
 
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
+    public function destroy(Book $added_book)
     {
         //
     }
