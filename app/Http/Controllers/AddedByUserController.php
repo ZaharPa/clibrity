@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AddedByUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $sort = $request->get('sort', 'created_at');
+        $order = $request->get('order', 'desc');
+
+        $allowedSorts = ['title', 'author', 'category', 'size', 'created_at'];
+        if(!in_array($sort, $allowedSorts)) {
+            $sort = 'created_at';
+        }
         return inertia('AddedByUser/Index', [
-            'books' => Auth::user()->publishedBooks()->paginate(10)
+            'sort' => $sort,
+            'order' => $order,
+            'books' => Auth::user()->publishedBooks()->orderBy($sort, $order)->paginate(10)
         ]);
     }
 
@@ -20,21 +31,9 @@ class AddedByUserController extends Controller
         return inertia('AddedByUser/Create');
     }
 
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'author' => 'required|string|max:255',
-                'description' => 'required|string',
-                'category' => 'required|in:' . implode(',', Book::$category),
-                'size' => 'numeric|min:1',
-                'title_path' => 'required|file|mimes:jpg,jpeg,png|max:2048',
-                'book_path' => 'required|file|mimes:pdf|max:10240'
-            ], [
-                'title_path' => 'The file should be in one of the formats: jpg, jpeg, png',
-                'book_path' => 'The file should be in one of the formats: pdf',
-            ]);
+            $validated = $request->validated();
 
             $titlePath = $request->file('title_path')->store('covers', 'public');
             $bookPath = $request->file('book_path')->store('books', 'public');
@@ -54,18 +53,38 @@ class AddedByUserController extends Controller
             return redirect()->route('book.show', $book)->with('success', 'Book added successfully');
     }
 
-    public function edit(Book $added_book)
+    public function edit(Book $addedBook)
     {
-        return inertia('AddedByUser/Edit', ['book' => $added_book]);
+        return inertia('AddedByUser/Edit', ['book' => $addedBook]);
     }
 
-    public function update(Request $request, Book $added_book)
+    public function update(BookRequest $request, Book $addedBook)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('title_path')) {
+            Storage::disk('public')->delete($addedBook->title_path);
+            $validated['title_path'] = $request->file('title_path')->store('covers', 'public');
+        }
+
+        if ($request->hasFile('book_path')) {
+            Storage::disk('public')->delete($addedBook->book_path);
+            $validated['book_path'] = $request->file('book_path')->store('books', 'public');
+        }
+
+        $addedBook->update($validated);
+
+        return redirect()->route('added-book.index')
+            ->with('success', 'Book updated successfully');
     }
 
-    public function destroy(Book $added_book)
+    public function destroy(Book $addedBook)
     {
-        //
+        Storage::disk('public')->delete($addedBook->title_path);
+        Storage::disk('public')->delete($addedBook->book_path);
+
+        $addedBook->delete();
+
+        return redirect()->route('added-book.index')->with('success', 'Book delete successfully');
     }
 }
