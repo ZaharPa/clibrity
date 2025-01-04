@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
 
         $users = User::all()->random(30);
 
-        for ($i = 0; $i < 500; $i++ ) {
+        for ($i = 0; $i < 500; $i++) {
             Book::factory()->create([
                 'user_id' => $users->random()->id
             ]);
         }
 
-        for ($i = 0; $i < 1000; $i++ ) {
+        for ($i = 0; $i < 1000; $i++) {
             $book = Book::all()->random();
             $user = User::all()->random();
 
@@ -39,11 +39,19 @@ class DatabaseSeeder extends Seeder
                 'book_id' => $book->id,
                 'user_id' => $user->id
             ]);
+        }
 
-            BookNote::factory()->create([
-                'book_id' => $book->id,
-                'user_id' => $user->id
-            ]);
+        $notes = collect();
+        for ($i = 0; $i < 250; $i++) {
+            $book = Book::all()->random();
+            $user = User::all()->random();
+
+            if (!$notes->contains(fn($note) => $note->book_id === $book->id && $note->user_id === $user->id)) {
+                $notes->push(BookNote::factory()->create([
+                    'book_id' => $book->id,
+                    'user_id' => $user->id
+                ]));
+            }
         }
     }
 }

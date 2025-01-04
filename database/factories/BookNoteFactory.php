@@ -18,7 +18,7 @@ class BookNoteFactory extends Factory
     {
         return [
             'status' => fake()->randomElement(['unread', 'reading', 'read']),
-            'comment' => fake()->sentences(3, true)
+            'notes' => fake()->sentences(3, true)
         ];
     }
 }

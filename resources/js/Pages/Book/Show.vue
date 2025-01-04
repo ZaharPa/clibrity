@@ -48,7 +48,8 @@
 
         <div class="mt-2">
             <label for="notes" class="label">Notes</label>
-            <textarea id="notes" v-model="notes" @change="updateNotes" class="input">
+            <textarea id="notes" @change="updateNotes" class="input">
+                {{ notes }}
             </textarea>
         </div>
 
@@ -65,15 +66,38 @@
         </div>
 
         <div class="mt-6 border border-dashed border-amber-700 p-4 rounded-md shadow-lg text-amber-800">
-            No comment yet
+            <span class="text-xl">Reviews</span>
+            <div v-if="reviews.data.length">
+                <div v-for="review in reviews.data" :key="review.id" class="mt-4 border-b border-amber-700 shadow-md">
+                    <p class="text-lg text-orange-700">{{ review.user.name }}</p>
+                    <div>
+                        <span v-for="i in 5" :key="i">
+                            {{ i <= Math.round(review.rating) ? '★' : '☆' }}
+                        </span>
+                    </div>
+                    <p>{{ review.comment }}</p>
+                </div>
+                <Pagination :links="reviews.links" class="mt-4" />
+            </div>
+            <div v-else>
+                No comment yet
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-defineProps({
-    book: Object
+import Pagination from '@/Components/UI/Pagination.vue';
+import { ref } from 'vue';
+
+const props = defineProps({
+    book: Object,
+    reviews: Object,
+    user_notes: Object
 })
+
+const status = ref(props.user_notes[0].status)
+const notes = ref(props.user_notes[0].notes)
 
 const formatDate = (date) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric'}
