@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Book;
+use App\Models\BookNote;
 use App\Models\BookReview;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -35,6 +36,11 @@ class DatabaseSeeder extends Seeder
             $user = User::all()->random();
 
             BookReview::factory()->create([
+                'book_id' => $book->id,
+                'user_id' => $user->id
+            ]);
+
+            BookNote::factory()->create([
                 'book_id' => $book->id,
                 'user_id' => $user->id
             ]);

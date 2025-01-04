@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BookReview>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BookNote>
  */
-class BookReviewFactory extends Factory
+class BookNoteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,8 @@ class BookReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'rating' => fake()->numberBetween(1, 5),
-            'comment' => fake()->sentence()
+            'status' => fake()->randomElement(['unread', 'reading', 'read']),
+            'comment' => fake()->sentences(3, true)
         ];
     }
 }
