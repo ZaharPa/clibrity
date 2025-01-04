@@ -60,6 +60,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $book->load('publisher');
+
         return inertia('Book/Show', ['book' => $book]);
     }
 

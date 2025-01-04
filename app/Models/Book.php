@@ -37,7 +37,7 @@ class Book extends Model
 
     public function publisher(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function getTitleUrlAttribute()
