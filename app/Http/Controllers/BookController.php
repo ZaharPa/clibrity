@@ -45,7 +45,9 @@ class BookController extends Controller
         return inertia('Book/Show', [
             'book' => $book,
             'reviews' => $book->reviews()->with('user')->paginate(20),
-            'user_notes' => Auth::check() ? Auth::user()->notes()->where('book_id', $book->id)->get() : null
+            'user_notes' => Auth::check()
+                ? Auth::user()->notes()->where('book_id', $book->id)->with('user')->get()
+                : null
         ]);
     }
 }

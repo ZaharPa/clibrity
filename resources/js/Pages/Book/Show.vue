@@ -32,6 +32,7 @@
                 id="status" class="rounded-md px-5 py-0 ml-2 border-yellow-400 focus:border-orange-600 focus:ring-0 focus:bg-orange-50"
                 v-model="status" @change="updateStatus"
             >
+                <option :value="null"></option>
                 <option value="unread">Unread</option>
                 <option value="reading">Reading</option>
                 <option value="read">Read</option>
@@ -48,19 +49,19 @@
 
         <div class="mt-2">
             <label for="notes" class="label">Notes</label>
-            <textarea id="notes" @change="updateNotes" class="input">
+            <textarea id="notes" v-model="notes" @change="updateNotes" class="input">
                 {{ notes }}
             </textarea>
         </div>
 
         <div class="mt-6">
-            <form class="border border-orange-700 bg-yellow-100 p-4 rounded-md shadow-md">
+            <form @submit.prevent="sendReview" class="border border-orange-700 bg-yellow-100 p-4 rounded-md shadow-md">
                 <span class="label">Leave your review book here</span>
-                <select class="input">
+                <select v-model="formReview.rating" class="input">
                     <option :value="null">Rating</option>
                     <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
                 </select>
-                <input type="text" placeholder="Text comment here" class="input mt-2" />
+                <input type="text" v-model="formReview.comment" placeholder="Text comment here" class="input mt-2" />
                 <button class="btn-light mt-2">Send</button>
             </form>
         </div>
@@ -69,7 +70,7 @@
             <span class="text-xl">Reviews</span>
             <div v-if="reviews.data.length">
                 <div v-for="review in reviews.data" :key="review.id" class="mt-4 border-b border-amber-700 shadow-md">
-                    <p class="text-lg text-orange-700">{{ review.user.name }}</p>
+                    <p class="text-lg text-orange-700">{{ review.user?.name }}</p>
                     <div>
                         <span v-for="i in 5" :key="i">
                             {{ i <= Math.round(review.rating) ? '★' : '☆' }}
@@ -88,6 +89,8 @@
 
 <script setup>
 import Pagination from '@/Components/UI/Pagination.vue';
+import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -96,8 +99,37 @@ const props = defineProps({
     user_notes: Object
 })
 
-const status = ref(props.user_notes[0].status)
-const notes = ref(props.user_notes[0].notes)
+const status = ref(props.user_notes[0]?.status)
+const notes = ref(props.user_notes[0]?.notes)
+
+const updateStatus = async () => {
+    await axios.post(route('book.status'), {
+        book_id: props.book.id,
+        status: status.value
+    });
+}
+
+const updateNotes = async () => {
+    await axios.post(route('book.notes'), {
+        book_id: props.book.id,
+        notes: notes.value
+    });
+}
+
+const formReview = useForm({
+    rating: null,
+    comment: ''
+})
+
+const sendReview = async () => {
+    const response = await axios.post(route('book.review'), {
+        rating: formReview.rating,
+        comment: formReview.comment,
+        book_id: props.book.id
+    });
+
+    props.reviews.data.unshift(response.data.review)
+}
 
 const formatDate = (date) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric'}

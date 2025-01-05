@@ -11,6 +11,8 @@ class BookNote extends Model
     /** @use HasFactory<\Database\Factories\BookNoteFactory> */
     use HasFactory;
 
+    protected $fillable = ['status', 'notes', 'book_id'];
+
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
