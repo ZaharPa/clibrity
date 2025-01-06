@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddedByUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookshelfController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -42,3 +43,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::resource('added-book', AddedByUserController::class)
     ->middleware(['auth', 'verified'])->except('show');
+
+Route::get('/bookshelf', BookshelfController::class)
+    ->middleware('auth')->name('bookshelf');

@@ -103,10 +103,14 @@ const status = ref(props.user_notes[0]?.status)
 const notes = ref(props.user_notes[0]?.notes)
 
 const updateStatus = async () => {
-    await axios.post(route('book.status'), {
-        book_id: props.book.id,
-        status: status.value
-    });
+    if (status.value == null) {
+        await axios.delete(route('book.status.delete') + `?book_id=${props.book.id}` )
+    } else {
+        await axios.post(route('book.status'), {
+            book_id: props.book.id,
+            status: status.value
+        });
+    }
 }
 
 const updateNotes = async () => {

@@ -9,6 +9,9 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/book/status', [BookNoteController::class, 'updateStatus'])
         ->name('book.status');
 
+    Route::delete('/book/status/delete', [BookNoteController::class, 'deleteStatus'])
+        ->name('book.status.delete');
+
     Route::post('/book/notes', [BookNoteController::class, 'updateNotes'])
         ->name('book.notes');
 

@@ -7,7 +7,8 @@
                 </div>
 
                 <div v-if="user" class="flex items-center gap-6">
-                    <Link class="yellow-light">{{ user.name }}`s Bookshelf</Link>
+                    <Link class="yellow-light">{{ user.name }}</Link>
+                    <Link :href="route('bookshelf')" class="yellow-light">Bookshelf</Link>
                     <Link :href="route('added-book.index')" class="yellow-light">Added by Me</Link>
                     <Link :href="route('logout')" method="delete" as="button" class="yellow-light">Logout</Link>
                 </div>

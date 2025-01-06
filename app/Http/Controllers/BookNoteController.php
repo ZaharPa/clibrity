@@ -21,6 +21,18 @@ class BookNoteController extends Controller
         return response()->json(['success' => 'Status updated']);
     }
 
+    public function deleteStatus(Request $request)
+    {
+        $note = Auth::user()->notes()->where('book_id', $request->book_id)->first();
+
+        if ($note) {
+            $note->delete();
+            return response()->json(['success' => 'Status deleted']);
+        }
+
+        return response()->json(['success' => 'Status wasn`t deleted', 'note' => $note, 'request' => $request->book_id]);
+    }
+
     public function updateNotes(Request $request)
     {
         $request->validate([
