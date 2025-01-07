@@ -4,10 +4,12 @@ use App\Http\Controllers\AddedByUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookshelfController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('', fn() => to_route('book.index'));
 
@@ -46,3 +48,6 @@ Route::resource('added-book', AddedByUserController::class)
 
 Route::get('/bookshelf', BookshelfController::class)
     ->middleware('auth')->name('bookshelf');
+
+Route::resource('profile', ProfileController::class)
+    ->only(['show']);

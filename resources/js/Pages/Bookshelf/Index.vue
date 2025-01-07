@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+import { useDataFormatter } from '@/Composables/useDataFormatter';
 import { Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -59,8 +60,5 @@ function filter(status) {
     })
 }
 
-const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric'}
-    return new Date(date).toLocaleDateString('en-GB', options)
-}
+const { formatDate } = useDataFormatter();
 </script>

@@ -89,6 +89,7 @@
 
 <script setup>
 import Pagination from '@/Components/UI/Pagination.vue';
+import { useDataFormatter } from '@/Composables/useDataFormatter';
 import { useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref } from 'vue';
@@ -135,8 +136,5 @@ const sendReview = async () => {
     props.reviews.data.unshift(response.data.review)
 }
 
-const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric'}
-    return new Date(date).toLocaleDateString('en-GB', options)
-}
+const { formatDate } = useDataFormatter();
 </script>
