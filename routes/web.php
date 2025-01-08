@@ -50,4 +50,4 @@ Route::get('/bookshelf', BookshelfController::class)
     ->middleware('auth')->name('bookshelf');
 
 Route::resource('profile', ProfileController::class)
-    ->only(['show']);
+    ->except(['index', 'create', 'store']);

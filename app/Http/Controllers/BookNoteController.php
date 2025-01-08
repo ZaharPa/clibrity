@@ -13,7 +13,7 @@ class BookNoteController extends Controller
             'status' => 'required|string|in:unread,reading,read',
             'book_id' => 'required|exists:books,id'
         ]);
-        $note = Auth::user()->notes()->updateOrCreate(
+        Auth::user()->notes()->updateOrCreate(
             ['book_id' => $request->book_id],
             ['status' => $request->status]
         );
@@ -38,11 +38,26 @@ class BookNoteController extends Controller
         $request->validate([
             'book_id' => 'required|exists:books,id'
         ]);
-        $note = Auth::user()->notes()->updateOrCreate(
+       Auth::user()->notes()->updateOrCreate(
             ['book_id' => $request->book_id],
             ['notes' => $request->notes]
         );
 
         return response()->json(['success' => 'Notes updated']);
+    }
+
+    public function updateFavorite(Request $request)
+    {
+        $request->validate([
+            'book_id' => 'required|exists:books,id',
+            'favorite' => 'required|boolean'
+        ]);
+
+        Auth::user()->notes()->updateOrCreate(
+            ['book_id' => $request->book_id],
+            ['favorite' => $request->favorite]
+        );
+
+        return response()->json(['success' => 'Favorite updated']);
     }
 }

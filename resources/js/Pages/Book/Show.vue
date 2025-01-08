@@ -37,6 +37,12 @@
                 <option value="reading">Reading</option>
                 <option value="read">Read</option>
             </select>
+
+            <label for="favorite" class="cursor-pointer">
+                <span @click="updateFavorite" :class="{'text-yellow-400': favorite, 'text-gray-400': !favorite}" class="text-3xl">
+                    {{ favorite ? '★' : '☆' }}
+                </span>
+            </label>
         </div>
 
         <span class="text-xl text-amber-700">Description</span>
@@ -102,6 +108,7 @@ const props = defineProps({
 
 const status = ref(props.user_notes[0]?.status)
 const notes = ref(props.user_notes[0]?.notes)
+const favorite = ref(props.user_notes[0]?.favorite)
 
 const updateStatus = async () => {
     if (status.value == null) {
@@ -118,6 +125,14 @@ const updateNotes = async () => {
     await axios.post(route('book.notes'), {
         book_id: props.book.id,
         notes: notes.value
+    });
+}
+
+const updateFavorite = async () => {
+    favorite.value = favorite.value ? 0 : 1
+    await axios.post(route('book.favorite'), {
+        book_id: props.book.id,
+        favorite: favorite.value
     });
 }
 

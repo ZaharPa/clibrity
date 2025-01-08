@@ -8,8 +8,18 @@
             <span>Marked {{ user.notes_count }} Books</span>
         </div>
         <div class="flex justify-around px-8 my-2 text-red-700 ">
-            <Link class="hover:text-red-500 cursor-pointer">Edit</Link>
-            <Link class="hover:text-red-500 cursor-pointer">Delete</Link>
+            <Link :href="route('profile.edit', {profile: user.id})" class="hover:text-red-500 cursor-pointer">Edit</Link>
+            <Link :href="route('profile.destroy', {profile: user.id})" as="button" method="delete" class="hover:text-red-500 cursor-pointer">Delete</Link>
+        </div>
+    </div>
+{{ books.data[1] }}
+    <div>
+        <span>{{ user.name }}`s favorites books</span>
+        <BookTitleGeneral   />
+        <BookGeneralInfo v-for="book in books.data" :key="book.id" :book="book" />
+
+        <div v-if="books.data.length">
+            <Pagination :links="books.links" />
         </div>
     </div>
 </template>
@@ -19,7 +29,8 @@ import { useDataFormatter } from '@/Composables/useDataFormatter';
 import { Link } from '@inertiajs/vue3';
 
 defineProps({
-    user: Object
+    user: Object,
+    books: Object
 })
 
 const { formatDate } = useDataFormatter()

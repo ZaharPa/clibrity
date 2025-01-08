@@ -12,7 +12,7 @@ class BookNote extends Model
     /** @use HasFactory<\Database\Factories\BookNoteFactory> */
     use HasFactory;
 
-    protected $fillable = ['status', 'notes', 'book_id'];
+    protected $fillable = ['status', 'notes', 'book_id', 'favorite'];
 
     protected $sortable = ['updated_at'];
 

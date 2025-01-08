@@ -15,6 +15,9 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/book/notes', [BookNoteController::class, 'updateNotes'])
         ->name('book.notes');
 
+    Route::post('/book/favorite', [BookNoteController::class, 'updateFavorite'])
+        ->name('book.favorite');
+
     Route::post('/book/review', BookReviewController::class)
         ->name('book.review');
 });
