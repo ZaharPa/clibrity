@@ -12,19 +12,21 @@
             <Link :href="route('profile.destroy', {profile: user.id})" as="button" method="delete" class="hover:text-red-500 cursor-pointer">Delete</Link>
         </div>
     </div>
-{{ books.data[1] }}
-    <div>
-        <span>{{ user.name }}`s favorites books</span>
-        <BookTitleGeneral   />
-        <BookGeneralInfo v-for="book in books.data" :key="book.id" :book="book" />
 
-        <div v-if="books.data.length">
+    <div class="text-center my-6">
+        <div class="mb-4 text-2xl text-orange-700">{{ user.name }}`s favorites books</div>
+        <BookTitleGeneral   />
+        <BookGeneralInfo v-for="book in books.data" :key="book.book.id" :book="book.book" />
+
+        <!-- <div v-if="notes.data.length">
             <Pagination :links="books.links" />
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup>
+import BookGeneralInfo from '@/Components/BookGeneralInfo.vue';
+import BookTitleGeneral from '@/Components/BookTitleGeneral.vue';
 import { useDataFormatter } from '@/Composables/useDataFormatter';
 import { Link } from '@inertiajs/vue3';
 

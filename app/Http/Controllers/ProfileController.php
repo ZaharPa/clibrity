@@ -12,7 +12,10 @@ class ProfileController extends Controller
     {
         $profile->loadCount('reviews', 'notes', 'publishedBooks');
 
-        $books = $profile->notes()->with('book')->paginate(10);
+        $books = $profile->notes()
+            ->where('favorite', true)
+            ->with('book')
+            ->paginate(10);
 
         return inertia('Profile/Show', [
             'user' => $profile,
