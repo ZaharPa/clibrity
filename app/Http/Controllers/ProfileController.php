@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -18,18 +20,22 @@ class ProfileController extends Controller
             ->paginate(10);
 
         return inertia('Profile/Show', [
-            'user' => $profile,
-            'books' => $books
+            'profile' => $profile,
+            'books' => $books,
+            'canControl' => Auth::user()->can('update', $profile)
         ]);
     }
 
     public function edit(User $profile)
     {
-        return inertia('Profile/Edit', ['user' => $profile]);
+        Gate::authorize('update', $profile);
+        return inertia('Profile/Edit', ['profile' => $profile]);
     }
 
     public function update(Request $request, User $profile)
     {
+        Gate::authorize('update', $profile);
+
         $request->validate([
             'name' => 'nullable|string',
             'password_old' => 'required|string|min:8',
@@ -50,11 +56,13 @@ class ProfileController extends Controller
 
         $profile->save();
 
-        return redirect()->route('profile.show', ['user' => $profile])->with('success', 'Profile updated successfully');
+        return redirect()->route('profile.show', ['profile' => $profile])->with('success', 'Profile updated successfully');
     }
 
     public function destroy(User $profile)
     {
+        Gate::authorize('delete', $profile);
+
         $profile->delete();
 
         return redirect()->route('book.index')->with('success', 'Account delete successfully');

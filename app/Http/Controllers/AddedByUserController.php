@@ -6,6 +6,7 @@ use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class AddedByUserController extends Controller
@@ -55,11 +56,15 @@ class AddedByUserController extends Controller
 
     public function edit(Book $addedBook)
     {
+        Gate::authorize('update', $addedBook);
+
         return inertia('AddedByUser/Edit', ['book' => $addedBook]);
     }
 
     public function update(BookRequest $request, Book $addedBook)
     {
+        Gate::authorize('update', $addedBook);
+
         $validated = $request->validated();
 
         if ($request->hasFile('title_path')) {
@@ -80,6 +85,8 @@ class AddedByUserController extends Controller
 
     public function destroy(Book $addedBook)
     {
+        Gate::authorize('destroy', $addedBook);
+
         Storage::disk('public')->delete($addedBook->title_path);
         Storage::disk('public')->delete($addedBook->book_path);
 

@@ -3,7 +3,7 @@
         <h1 class="text-center text-2xl text-orange-600 mb-4">Edit Profile</h1>
         <form @submit.prevent="updateProfile" class="flex flex-col gap-3">
             <div>
-                <label for="name" class="label">Name: {{ user.name }}</label>
+                <label for="name" class="label">Name: {{ profile.name }}</label>
                 <input type="text" v-model="formProfile.name" id="name" class="input" />
                 <div v-if="formProfile.errors.name" class="input-error">{{ formProfile.errors.name }}</div>
             </div>
@@ -31,16 +31,16 @@
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-    user: Object
+    profile: Object
 })
 
 const formProfile = useForm({
-    name: props.user.name,
+    name: props.profile.name,
     password_old: null,
     password_new: null
 })
 
 const updateProfile = () => {
-    formProfile.put(route('profile.update', {profile: props.user.id}))
+    formProfile.put(route('profile.update', {profile: props.profile.id}))
 }
 </script>
