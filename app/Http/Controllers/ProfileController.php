@@ -22,7 +22,9 @@ class ProfileController extends Controller
         return inertia('Profile/Show', [
             'profile' => $profile,
             'books' => $books,
-            'canControl' => Auth::user()->can('update', $profile)
+            'canControl' => Auth::check()
+                ? Auth::user()->can('update', $profile)
+                : false
         ]);
     }
 

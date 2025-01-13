@@ -5,7 +5,9 @@
                  class="grid gap-2 hover:shadow-lg px-2 py-4 hover:font-medium hover:text-amber-950"
                 :class="props.control ? 'grid-cols-8' : 'grid-cols-9'"
             >
-                <span class="col-span-2">Photo</span>
+                <span class="col-span-2 flex flex-col items-center">
+                    <img :src="book.title_url" class="h-40" alt="Photo" />
+                </span>
                 <span class="col-span-3">{{ book.title }}</span>
                 <span class="col-span-2">{{ book.author }}</span>
                 <span>{{ book.category }}</span>

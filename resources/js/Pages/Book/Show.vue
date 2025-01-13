@@ -17,7 +17,8 @@
                 </p>
                 <p class="text-amber-900">
                     <span>
-                        Published by {{ book.publisher?.name }}
+                        Published by
+                        <Link :href="route('profile.show', {profile: book.publisher?.id })" class="cursor-pointer hover:text-amber-600">{{ book.publisher?.name }}</Link>
                     </span>
                     <span>
                         at {{ formatDate(book.created_at) }}
@@ -91,12 +92,13 @@
             </div>
         </div>
     </div>
+    <pre>{{ user_notes }}</pre>
 </template>
 
 <script setup>
 import Pagination from '@/Components/UI/Pagination.vue';
 import { useDataFormatter } from '@/Composables/useDataFormatter';
-import { useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref } from 'vue';
 
@@ -106,9 +108,11 @@ const props = defineProps({
     user_notes: Object
 })
 
-const status = ref(props.user_notes[0]?.status)
-const notes = ref(props.user_notes[0]?.notes)
-const favorite = ref(props.user_notes[0]?.favorite)
+const userNotes = props.user_notes || [];
+
+const status = ref(userNotes[0]?.status || null)
+const notes = ref(userNotes[0]?.notes || null)
+const favorite = ref(userNotes[0]?.favorite || false)
 
 const updateStatus = async () => {
     if (status.value == null) {
