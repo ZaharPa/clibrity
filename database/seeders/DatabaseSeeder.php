@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Book;
 use App\Models\BookNote;
 use App\Models\BookReview;
+use App\Models\Post;
+use App\Models\Topic;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -29,6 +31,12 @@ class DatabaseSeeder extends Seeder
             Book::factory()->create([
                 'user_id' => $users->random()->id
             ]);
+
+            if ($i % 5 === 0) {
+                Topic::factory()->create([
+                    'user_id' => $users->random()->id
+                ]);
+            }
         }
 
         for ($i = 0; $i < 1000; $i++) {
@@ -51,6 +59,21 @@ class DatabaseSeeder extends Seeder
                     'book_id' => $book->id,
                     'user_id' => $user->id
                 ]));
+            }
+        }
+
+        $topics = Topic::all();
+
+        foreach ($users as $user) {
+            foreach ($topics as $topic) {
+                $postCount = rand(0,5);
+
+                for ($i = 0; $i < $postCount; $i++) {
+                    Post::factory()->create([
+                        'user_id' => $user->id,
+                        'topic_id' => $topic->id,
+                    ]);
+                }
             }
         }
     }
