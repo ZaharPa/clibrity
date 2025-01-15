@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookshelfController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,3 +52,6 @@ Route::get('/bookshelf', BookshelfController::class)
 
 Route::resource('profile', ProfileController::class)
     ->except(['index', 'create', 'store']);
+
+Route::resource('topics', TopicController::class)
+    ->only(['index', 'show']);
