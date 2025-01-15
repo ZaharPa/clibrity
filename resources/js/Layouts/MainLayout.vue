@@ -6,6 +6,10 @@
                     <Link :href="route('book.index')">Clibrity</Link>
                 </div>
 
+                <div>
+                    <Link :href="route('topics.index')">Forum</Link>
+                </div>
+
                 <div v-if="user" class="flex items-center gap-6">
                     <Link :href="route('profile.show', {profile: user.id})" class="yellow-light">{{ user.name }}</Link>
                     <Link :href="route('bookshelf')" class="yellow-light">Bookshelf</Link>

@@ -10,7 +10,15 @@ class TopicController extends Controller
 {
     public function index()
     {
-        return Topic::all()->with('user')->get();
+        return inertia(
+            'Topic/Index',
+            [
+                'topics' => Topic::with('user')
+                    ->withCount('posts')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(30)
+            ]
+        );
     }
 
     public function store(Request $request)
@@ -29,7 +37,13 @@ class TopicController extends Controller
 
     public function show(Topic $topic)
     {
-        return $topic->load('posts.user');
+        return inertia('Topic/Show', [
+            'topic' => $topic,
+            'posts' => $topic->posts()
+                ->with('user')
+                ->orderBy('created_at', 'desc')
+                ->paginate(30)
+        ]);
     }
 
     public function destroy(Topic $topic)
