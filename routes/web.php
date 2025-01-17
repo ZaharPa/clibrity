@@ -54,4 +54,4 @@ Route::resource('profile', ProfileController::class)
     ->except(['index', 'create', 'store']);
 
 Route::resource('topics', TopicController::class)
-    ->only(['index', 'show']);
+    ->only(['index', 'show', 'create']);

@@ -1,6 +1,7 @@
 <template>
+    <Link :href="route('topics.create')" class="btn-normal p-2">Create Topic</Link>
     <div v-for="topic in topics.data" :key="topic.id">
-        <div class="mt-2 p-2 bg-orange-100 shadow-md rounded-md hover:bg-orange-200 transition">
+        <div class="mt-3 p-2 bg-orange-100 shadow-md rounded-md hover:bg-orange-200 transition">
             <Link :href="route('topics.show', {topic: topic.id})">
                 <div class="mb-2 flex justify-between pr-6">
                     <h3 class="text-xl">{{ topic.title }}</h3>

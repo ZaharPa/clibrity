@@ -21,6 +21,11 @@ class TopicController extends Controller
         );
     }
 
+    public function create()
+    {
+        return inertia('Topic/Create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -28,11 +33,14 @@ class TopicController extends Controller
             'description' => 'nullable'
         ]);
 
-        return Topic::create([
+        Topic::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => Auth::user()->id
         ]);
+
+        return redirect()->route('topics.index')
+            ->with('success', 'Topic was created');
     }
 
     public function show(Topic $topic)
