@@ -27,6 +27,8 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::delete('/topics/{topic}', [TopicController::class, 'destroy'])
         ->name('topics.destroy');
 
+    Route::get('/topics/{topic}/posts', [PostController::class, 'index'])
+        ->name('posts.index');
     Route::post('/topics/{topic}/posts', [PostController::class, 'store'])
         ->name('posts.store');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])

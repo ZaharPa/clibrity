@@ -46,11 +46,7 @@ class TopicController extends Controller
     public function show(Topic $topic)
     {
         return inertia('Topic/Show', [
-            'topic' => $topic,
-            'posts' => $topic->posts()
-                ->with('user')
-                ->orderBy('created_at', 'desc')
-                ->paginate(30)
+            'topic' => $topic
         ]);
     }
 

@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    public function index(Topic $topic)
+    {
+        return $topic->posts()
+            ->with('user')
+            ->latest()
+            ->paginate(30);
+    }
+
     public function store(Request $request, Topic $topic)
     {
         $request->validate([
