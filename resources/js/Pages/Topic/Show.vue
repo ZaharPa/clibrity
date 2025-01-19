@@ -44,7 +44,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
-    topic: Array
+    topic: Object
 });
 
 const posts = ref([]);
@@ -53,7 +53,7 @@ const links = ref([]);
 const { formatDate } = useDataFormatter();
 const newPost = ref('');
 
-const fetchPosts = async (url = route('posts.index', {topic: props.topic.id})) => {
+const fetchPosts = async (url = route('posts.index', {topic: props.topic?.id})) => {
     try {
         const response = await axios.get(url);
         posts.value = response.data;
@@ -75,7 +75,7 @@ const submitPost = async () => {
         content: newPost.value,
     });
 
-    props.posts.data.unshift(response.data);
+    posts.value.data.unshift(response.data);
     newPost.value = '';
 };
 </script>

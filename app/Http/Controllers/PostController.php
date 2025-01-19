@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -23,10 +24,16 @@ class PostController extends Controller
             'content' => 'required'
         ]);
 
-        return $topic->posts()->create([
+        $post = $topic->posts()->create([
             'content' => $request->content,
             'user_id' => Auth::user()->id
         ]);
+
+        broadcast(new PostCreated($post));
+
+        return response()->json([
+            'post' => $post
+        ], 201);
     }
 
    public function destroy(Post $post)
