@@ -13,7 +13,10 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
-window.Echo.channel('posts')
-    .listen('PostCreated', (event) => {
-        console.log('New post created:', event);
+export function listenToTopic(topicId, onPostCreated) {
+    window.Echo.channel(`topic-${topicId}`)
+        .listen('PostCreated', (event) => {
+            console.log('New post created:', event);
+                onPostCreated(event);
     });
+}

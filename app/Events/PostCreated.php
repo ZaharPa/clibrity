@@ -24,14 +24,15 @@ class PostCreated implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('posts');
+        return new Channel('topic-' . $this->post->topic_id);
     }
 
     public function broadcastWith()
     {
         return [
-            'id' => $this->post->id,
-            'content' => $this->post->content
+            'content' => $this->post->content,
+            'author' => $this->post->user->name,
+            'created_at' => $this->post->created_at,
         ];
     }
 }

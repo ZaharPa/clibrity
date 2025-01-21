@@ -25,7 +25,7 @@
     <div v-for="post in posts.data" :key="post.id">
         <div class="bg-orange-100 mb-4 shadow-lg rounded-md p-2">
             <div class="flex justify-between">
-                <span class="text-xl">{{ post.user ? post.user.name : 'You' }}</span>
+                <span class="text-xl">{{ post.user ? post.user.name : post.author }}</span>
                 <span>{{ formatDate(post.created_at) }}</span>
             </div>
             <div class="mt-2">{{ post.content }}</div>
@@ -42,6 +42,7 @@ import Pagination from '@/Components/UI/Pagination.vue';
 import { useDataFormatter } from '@/Composables/useDataFormatter';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { listenToTopic } from '@/Services/echo.js'
 
 const props = defineProps({
     topic: Object
@@ -63,7 +64,16 @@ const fetchPosts = async (url = route('posts.index', {topic: props.topic?.id})) 
     }
 };
 
- onMounted(fetchPosts);
+ const onPostCreated = (newPost) => {
+    posts.value.data.unshift(newPost);
+ };
+
+ onMounted(() => {
+    fetchPosts();
+    listenToTopic(props.topic.id, onPostCreated);
+ });
+
+
 
 const submitPost = async () => {
     if (!newPost.value.trim()) {
@@ -75,7 +85,6 @@ const submitPost = async () => {
         content: newPost.value,
     });
 
-    posts.value.data.unshift(response.data);
     newPost.value = '';
 };
 </script>
