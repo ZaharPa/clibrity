@@ -4,6 +4,9 @@
             <span class="text-2xl font-medium">{{ topic.title }}</span>
             <span>{{ formatDate(topic.created_at) }}</span>
         </div>
+        <div v-if="canDelete">
+            <Link :href="route('topics.destroy', {topic: props.topic.id})" as="button" method="delete" class="btn-light bg-red-400 hover:bg-amber-50">Delete</Link>
+        </div>
         <div class="text-orange-900 text-lg">{{ topic.description }}</div>
     </div>
 
@@ -43,9 +46,14 @@ import { useDataFormatter } from '@/Composables/useDataFormatter';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { listenToTopic } from '@/Services/echo.js'
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-    topic: Object
+    topic: Object,
+    canDelete: {
+        type: Object,
+        default: false
+    }
 });
 
 const posts = ref([]);

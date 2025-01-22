@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TopicController extends Controller
 {
@@ -46,14 +47,19 @@ class TopicController extends Controller
     public function show(Topic $topic)
     {
         return inertia('Topic/Show', [
-            'topic' => $topic
+            'topic' => $topic,
+            'canDelete' => Auth::check()
+                ? Auth::user()->can('delete', $topic)
+                : false
         ]);
     }
 
     public function destroy(Topic $topic)
     {
+        Gate::authorize('delete', $topic);
         $topic->delete();
 
-        return response()->json(['success' => 'Topic was deleted']);
+        return redirect()->route('topics.index')
+            ->with('success', 'Topic was deleted');
     }
 }
