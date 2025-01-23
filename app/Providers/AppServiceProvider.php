@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Book;
+use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Policies\AddedByUserPolicy;
+use App\Policies\PostPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\TopicPolicy;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, ProfilePolicy::class);
         Gate::policy(Book::class, AddedByUserPolicy::class);
         Gate::policy(Topic::class, TopicPolicy::class);
+        Gate::policy(Post::class, PostPolicy::class);
 
         Inertia::share([
             'user' => fn() => Auth::check() ? Auth::user() : null,

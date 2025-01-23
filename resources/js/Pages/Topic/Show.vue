@@ -31,7 +31,16 @@
                 <span class="text-xl">{{ post.user ? post.user.name : post.author }}</span>
                 <span>{{ formatDate(post.created_at) }}</span>
             </div>
+            <button
+                v-if="post.canDelete"
+                @click="deletePost(post.id)"
+                title="Delete post"
+                class="p-1 text-red-400 hover:text-red-600 font-medium text-xl float-right"
+            >
+                &times;
+            </button>
             <div class="mt-2">{{ post.content }}</div>
+
         </div>
     </div>
 
@@ -76,13 +85,6 @@ const fetchPosts = async (url = route('posts.index', {topic: props.topic?.id})) 
     posts.value.data.unshift(newPost);
  };
 
- onMounted(() => {
-    fetchPosts();
-    listenToTopic(props.topic.id, onPostCreated);
- });
-
-
-
 const submitPost = async () => {
     if (!newPost.value.trim()) {
         alert('Field cannot be empty')
@@ -95,4 +97,23 @@ const submitPost = async () => {
 
     newPost.value = '';
 };
+
+const deletePost = async (postId) => {
+    if(!confirm('Are you sure you want to delete this post?')) return;
+
+    try {
+        await axios.delete(route('posts.destroy', {post: postId}));
+    } catch (error) {
+        console.error('Error deleting post: ', error);
+    }
+};
+
+const onPostDeleted = (postId) => {
+    posts.value.data = posts.value.data.filter(post => post.id !== postId);
+};
+
+onMounted(() => {
+    fetchPosts();
+    listenToTopic(props.topic.id, onPostCreated, onPostDeleted);
+ });
 </script>
