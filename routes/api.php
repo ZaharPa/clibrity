@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookNoteController;
 use App\Http\Controllers\BookReviewController;
 use App\Http\Controllers\PostController;
@@ -36,4 +37,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 Route::middleware('web')->group(function () {
     Route::get('/topics/{topic}/posts', [PostController::class, 'index'])
     ->name('posts.index');
+
+    Route::get('/books/search', [BookController::class, 'search'])
+        ->name('books.search');
 });

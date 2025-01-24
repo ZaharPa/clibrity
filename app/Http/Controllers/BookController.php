@@ -50,4 +50,15 @@ class BookController extends Controller
                 : null
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query', '');
+        $books = Book::where('title', 'like', "%$query%")
+            ->select('id', 'title')
+            ->limit(10)
+            ->get();
+
+        return response()->json($books);
+    }
 }

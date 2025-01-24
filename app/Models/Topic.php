@@ -12,7 +12,7 @@ class Topic extends Model
     /** @use HasFactory<\Database\Factories\TopicFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'book_id'];
 
     public function posts(): HasMany
     {

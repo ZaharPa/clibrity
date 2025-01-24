@@ -31,12 +31,14 @@ class TopicController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'book_id' => 'nullable|exists:books,id'
         ]);
 
         Topic::create([
             'title' => $request->title,
             'description' => $request->description,
+            'book_id' => $request->book_id,
             'user_id' => Auth::user()->id
         ]);
 
