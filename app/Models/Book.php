@@ -51,6 +51,11 @@ class Book extends Model
         return $this->hasMany(BookNote::class, 'book_id');
     }
 
+    public function topics(): HasMany
+    {
+        return $this->hasMany(Topic::class);
+    }
+
     public function getTitleUrlAttribute()
     {
         return asset('storage/' . $this->title_path);
