@@ -5,7 +5,7 @@
             <span>{{ formatDate(topic.created_at) }}</span>
         </div>
         <div v-if="topic.book_id">
-            <span>{{ topic.book_id }}</span>
+            <span class="text-lg text-amber-800">Book - {{ topic.book.title }}</span>
         </div>
         <div v-if="canDelete">
             <Link :href="route('topics.destroy', {topic: props.topic.id})" as="button" method="delete" class="btn-light bg-red-400 hover:bg-amber-50">Delete</Link>

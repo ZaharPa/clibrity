@@ -9,13 +9,17 @@ use Illuminate\Support\Facades\Gate;
 
 class TopicController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filter = $request->only('search');
+
         return inertia(
             'Topic/Index',
             [
+                'filter' => $filter,
                 'topics' => Topic::with('user')
                     ->withCount('posts')
+                    ->filter($filter)
                     ->orderBy('created_at', 'desc')
                     ->paginate(30)
             ]
@@ -48,6 +52,8 @@ class TopicController extends Controller
 
     public function show(Topic $topic)
     {
+        $topic->load('book');
+
         return inertia('Topic/Show', [
             'topic' => $topic,
             'canDelete' => Auth::check()

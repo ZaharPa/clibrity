@@ -42,8 +42,16 @@ class BookController extends Controller
     {
         $book->load('publisher');
 
+        $topics = $book->topics()
+            ->withCount('posts')
+            ->orderBy('posts_count', 'desc')
+            ->take(5)
+            ->with('user')
+            ->get();
+
         return inertia('Book/Show', [
             'book' => $book,
+            'topics' => $topics,
             'reviews' => $book->reviews()->with('user')->paginate(20),
             'user_notes' => Auth::check()
                 ? Auth::user()->notes()->where('book_id', $book->id)->with('user')->get()

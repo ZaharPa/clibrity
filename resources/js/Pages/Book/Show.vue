@@ -62,6 +62,10 @@
         </div>
 
         <div class="mt-6">
+            <TopicBox :topics="topics" />
+        </div>
+
+        <div class="mt-6">
             <form @submit.prevent="sendReview" class="border border-orange-700 bg-yellow-100 p-4 rounded-md shadow-md">
                 <span class="label">Leave your review book here</span>
                 <select v-model="formReview.rating" class="input">
@@ -92,10 +96,10 @@
             </div>
         </div>
     </div>
-    <pre>{{ user_notes }}</pre>
 </template>
 
 <script setup>
+import TopicBox from '@/Components/TopicBox.vue';
 import Pagination from '@/Components/UI/Pagination.vue';
 import { useDataFormatter } from '@/Composables/useDataFormatter';
 import { Link, useForm } from '@inertiajs/vue3';
@@ -104,6 +108,7 @@ import { ref } from 'vue';
 
 const props = defineProps({
     book: Object,
+    topics: Object,
     reviews: Object,
     user_notes: Object
 })

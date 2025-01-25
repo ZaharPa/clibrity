@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +28,17 @@ class Topic extends Model
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
+    }
+
+    public function scopeFilter(Builder $query, $filter): Builder
+    {
+        return $query->when($filter['search'] ?? null, function ($query, $search) {
+            $query->where(function($query) use ($search) {
+                $query->where('topics.title', 'LIKE', "%$search%")
+                    ->orWhereHas('book', function($query) use ($search) {
+                        $query->where('books.title', 'LIKE', "%$search%");
+                    });
+            });
+        });
     }
 }

@@ -32,7 +32,7 @@
             </div>
 
             <div class="items-center space-x-3">
-                <button type="sumbit" class="btn-normal">Filter</button>
+                <button type="submit" class="btn-normal">Filter</button>
                 <button type="reset" @click="clear" class="btn-normal">Clear</button>
             </div>
         </div>
