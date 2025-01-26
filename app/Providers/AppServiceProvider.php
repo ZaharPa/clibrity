@@ -10,6 +10,7 @@ use App\Policies\AddedByUserPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\TopicPolicy;
+use App\Services\RecommendationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -22,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(RecommendationService::class, function ($app) {
+            return new RecommendationService();
+        });
     }
 
     /**
