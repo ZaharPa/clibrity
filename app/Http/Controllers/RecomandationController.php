@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\RecommendationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecomandationController extends Controller
 {
@@ -16,7 +17,7 @@ class RecomandationController extends Controller
 
     public function recommendBooks()
     {
-        $userId = auth()->id();
+        $userId = Auth::user()->id;
 
         $recommendatedBooks = $this->recommendationService->recommendBooksBasedOnTaste($userId);
 

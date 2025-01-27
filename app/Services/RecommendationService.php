@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Book;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RecommendationService
 {
@@ -16,7 +17,7 @@ class RecommendationService
                 (SQRT(SUM(POW(br1.rating, 2))) * SQRT(SUM(POW(br2.rating, 2)))) as similarity
             '))
             ->where('br1.user_id', $userId)
-            ->where('br1.user_id', '!=', $userId)
+            ->where('br2.user_id', '!=', $userId)
             ->groupBy('br2.user_id')
             ->having('similarity', '>', 0.5)
             ->orderBy('similarity', 'desc')
@@ -27,8 +28,15 @@ class RecommendationService
     {
         $similarUsers = $this->findSimilarUsers($userId);
 
-        return Book::select('books.id', 'books.title', DB::raw('
-                AVG(book_reviews.rating) as avg_rating
+        return Book::select(
+                'books.id',
+                'books.title',
+                'books.author',
+                'books.category',
+                'books.size',
+                'books.title_path',
+                DB::raw('
+                    AVG(book_reviews.rating) as avg_rating
             '))
             ->join('book_reviews', 'books.id', '=', 'book_reviews.book_id')
             ->whereIn('book_reviews.user_id', $similarUsers)
@@ -37,9 +45,10 @@ class RecommendationService
                     ->from('book_reviews')
                     ->where('user_id', $userId);
             })
-            ->groupBy('books.id', 'books.title')
+            ->groupBy('books.id', 'books.title','books.author',
+                'books.category', 'books.size', 'books.title_path',)
             ->orderBy('avg_rating', 'desc')
-            ->take(10)
+            ->take(6)
             ->get();
     }
 }

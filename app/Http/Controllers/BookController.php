@@ -31,7 +31,7 @@ class BookController extends Controller
                 'filters' => $filters,
                 'books' => Book::orderBy($sort, $order)
                     ->filter($filters)
-                    ->paginate(20)
+                    ->paginate(10)
                     ->withQueryString(),
 
             ]

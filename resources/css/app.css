@@ -37,4 +37,8 @@
     .yellow-light {
         @apply hover:drop-shadow-[0_0_8px_rgba(255,255,100,0.8)] transition-all duration-200
     }
+
+    .title-h2 {
+        @apply text-xl font-bold mb-4 text-orange-800 text-center
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookNoteController;
 use App\Http\Controllers\BookReviewController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RecomandationController;
 use App\Http\Controllers\TopicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,9 @@ Route::middleware(['web', 'auth'])->group(function () {
         ->name('posts.store');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])
         ->name('posts.destroy');
+
+    Route::get('/books/recomandations', [RecomandationController::class, 'recommendBooks'])
+        ->name('books.recommendations');
 });
 
 Route::middleware('web')->group(function () {
