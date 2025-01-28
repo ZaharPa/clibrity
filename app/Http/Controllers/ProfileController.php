@@ -14,14 +14,22 @@ class ProfileController extends Controller
     {
         $profile->loadCount('reviews', 'notes', 'publishedBooks');
 
-        $books = $profile->notes()
+        $publishedBooks = $profile->publishedBooks()
+            ->latest()
+            ->paginate(10, ['*'], 'published_books_page')
+            ->withQueryString();
+
+        $favBooks = $profile->notes()
             ->where('favorite', true)
             ->with('book')
-            ->paginate(10);
+            ->latest()
+            ->paginate(10, ['*'], 'fav_books_page')
+            ->withQueryString();
 
         return inertia('Profile/Show', [
             'profile' => $profile,
-            'books' => $books,
+            'publishedBooks' => $publishedBooks,
+            'favBooks' => $favBooks,
             'canControl' => Auth::check()
                 ? Auth::user()->can('update', $profile)
                 : false

@@ -13,14 +13,20 @@
         </div>
     </div>
 
-    <div class="text-center my-6">
+    <div v-if="publishedBooks.data.length" class="text-center my-6">
+        <div class="mb-4 text-2xl text-orange-700">{{ profile.name }}`s published books</div>
+        <BookTitleGeneral   />
+        <BookGeneralInfo v-for="book in publishedBooks.data" :key="book.id" :book="book" />
+
+        <Pagination :links="publishedBooks.links" />
+    </div>
+
+    <div v-if="favBooks.data.length" class="text-center my-6">
         <div class="mb-4 text-2xl text-orange-700">{{ profile.name }}`s favorites books</div>
         <BookTitleGeneral   />
-        <BookGeneralInfo v-for="book in books.data" :key="book.book.id" :book="book.book" />
+        <BookGeneralInfo v-for="book in favBooks.data" :key="book.book.id" :book="book.book" />
 
-        <div v-if="books.data.length">
-            <Pagination :links="books.links" />
-        </div>
+        <Pagination :links="favBooks.links" />
     </div>
 </template>
 
@@ -33,7 +39,8 @@ import { Link } from '@inertiajs/vue3';
 
 defineProps({
     profile: Object,
-    books: Object,
+    publishedBooks: Object,
+    favBooks: Object,
     canControl: {
         type: Object,
         default: false
