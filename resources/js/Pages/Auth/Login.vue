@@ -13,8 +13,14 @@
             <div v-if="form.errors.password" class="input-error">{{ form.errors.password }}</div>
         </div>
 
+        <div v-if="form.errors.captcha" class="input-error">
+            {{ form.errors.captcha }}
+        </div>
+
         <div class="mt-4">
-            <button type="submit" class="btn-normal w-full">Login</button>
+            <button type="submit" :disabled="form.processing"  class="btn-normal w-full">
+                {{ form.processing ? 'Logging in...' : 'Login' }}
+            </button>
 
             <div class="mt-2 text-center hover:text-orange-700">
                 <Link :href="route('register.create')">Need an account? Click Here</Link>
@@ -26,11 +32,34 @@
 
 <script setup>
 import { Link, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
 const form = useForm({
     email: null,
-    password: null
-})
+    password: null,
+    captcha: ''
+});
 
-const login = () => form.post(route('login.store'))
+const login = async() => {
+    form.errors.captcha = '';
+
+    try {
+        const recaptchaToken = await grecaptcha.execute('6LfovscqAAAAAK10j_EYdfzD6EAE0pRk03Cbxc3u', {action: 'login'});
+        form.captcha = recaptchaToken;
+    } catch (error) {
+        form.errors.captcha = 'CAPTCHA validation failed. Please try again.';
+        return;
+    }
+
+    form.post(route('login.store'))
+};
+
+onMounted(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js?render=6LfovscqAAAAAK10j_EYdfzD6EAE0pRk03Cbxc3u';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+});
 </script>
+
