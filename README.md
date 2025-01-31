@@ -8,7 +8,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-Clibrity is a comprehensive book management platform that allows users to manage their personal book collections, write reviews, participate in discussions, and receive real-time notifications. Built with Laravel and Vue.js, Clibrity offers a seamless and responsive user experience.
+Clibrity is a comprehensive book management platform that allows users to manage their personal book collections, write reviews, participate in discussion. Built with Laravel and Vue.js, Clibrity offers a seamless and responsive user experience.
 
 ## Features
 
@@ -111,3 +111,16 @@ Once the server is running, you can access the application at `http://localhost:
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
+
+# Screenshots
+Below are some screenshots showing the functionality and appearance of the platform:
+
+![registration page](https://github.com/user-attachments/assets/787e647d-9604-407a-ab46-b576568ad7d0)
+
+![forum](https://github.com/user-attachments/assets/93e3d68c-0e23-4acc-8e8e-ff0db9acac8c)
+
+![create book](https://github.com/user-attachments/assets/f951923d-674a-49ec-9e0e-c7bd7cf5396c)
+
+![book page](https://github.com/user-attachments/assets/5affe38d-205e-41b7-a969-62246b7a8d30)
+
+![main page](https://github.com/user-attachments/assets/78d2d974-3b48-438d-b67e-76888d001faa)
