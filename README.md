@@ -112,7 +112,10 @@ Once the server is running, you can access the application at `http://localhost:
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
-# Screenshots
+## Design
+[Figma](https://www.figma.com/design/sIE8VsoMLYMj2LEGvYuTnj/Clibrity?node-id=0-1&t=7WPZGquDw09RjTJp-1)
+
+## Screenshots
 Below are some screenshots showing the functionality and appearance of the platform:
 
 ![registration page](https://github.com/user-attachments/assets/787e647d-9604-407a-ab46-b576568ad7d0)
