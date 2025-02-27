@@ -19,7 +19,7 @@
                 <input type="password" v-model="formProfile.password_new" id="password_new" class="input" />
                 <div v-if="formProfile.errors.password_new" class="input-error">{{ formProfile.errors.password_new }}</div>
             </div>
-            {{ props }}
+
             <div class="items-center flex flex-col mt-2">
                 <button type="submit" class="btn-normal w-2/3">Save</button>
             </div>
