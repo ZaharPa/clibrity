@@ -1,5 +1,6 @@
 # Clibrity
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center">![main page](https://github.com/user-attachments/assets/78d2d974-3b48-438d-b67e-76888d001faa)
+</p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
@@ -125,5 +126,3 @@ Below are some screenshots showing the functionality and appearance of the platf
 ![create book](https://github.com/user-attachments/assets/f951923d-674a-49ec-9e0e-c7bd7cf5396c)
 
 ![book page](https://github.com/user-attachments/assets/5affe38d-205e-41b7-a969-62246b7a8d30)
-
-![main page](https://github.com/user-attachments/assets/78d2d974-3b48-438d-b67e-76888d001faa)
