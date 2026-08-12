@@ -1,5 +1,6 @@
 # Clibrity
-<p align="center">![main page](https://github.com/user-attachments/assets/78d2d974-3b48-438d-b67e-76888d001faa)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/78d2d974-3b48-438d-b67e-76888d001faa" alt="main page">
 </p>
 
 <p align="center">
